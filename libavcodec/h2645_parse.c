@@ -124,7 +124,11 @@ int ff_h2645_extract_rbsp(const uint8_t *src, int length,
                         nal->skipped_bytes_pos[nal->skipped_bytes-1] = di - 1;
                 }
                 continue;
-            } else // next start code
+            } else if (src[si + 2] == 2) {
+                dst[di++] = src[si++];
+                dst[di++] = src[si++];
+            }
+            else // next start code
                 goto nsc;
         }
 
